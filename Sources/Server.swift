@@ -55,7 +55,23 @@ public enum ServerError: Int, ErrorProtocol, CustomStringConvertible {
 	}
 }
 
-internal func log(level: Log.Level = .debug, _ item: Any) {
+public struct LogLevel: OptionSet {
+    public let rawValue: Int32
+
+    public init(rawValue: Int32) {
+        self.rawValue = rawValue
+    }
+
+    public static let trace   = Level(rawValue: 1 << 0)
+    public static let debug   = Level(rawValue: 1 << 1)
+    public static let info    = Level(rawValue: 1 << 2)
+    public static let warning = Level(rawValue: 1 << 3)
+    public static let error   = Level(rawValue: 1 << 4)
+    public static let fatal   = Level(rawValue: 1 << 5)
+    public static let all     = Level(rawValue: ~0)
+}
+
+internal func log(level: LogLevel = .debug, _ item: Any) {
 	guard level.rawValue >= Server.logLevel.rawValue else { return }
 //	log.log(level, item: item)
 	print(item)
@@ -63,7 +79,7 @@ internal func log(level: Log.Level = .debug, _ item: Any) {
 
 public class Server: Responder, Middleware {
 	
-	public static var logLevel: Log.Level = .error
+	public static var logLevel: LogLevel = .error
 	
 	private var webSocketServer: WebSocketServer.Server!
 	
