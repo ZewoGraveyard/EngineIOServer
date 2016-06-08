@@ -1,4 +1,4 @@
-# WebSocketServer
+# EngineIOServer
 
 [![Swift][swift-badge]][swift-url]
 [![Zewo][zewo-badge]][zewo-url]
@@ -6,29 +6,24 @@
 [![License][mit-badge]][mit-url]
 [![Slack][slack-badge]][slack-url]
 [![Travis][travis-badge]][travis-url]
-[![Codebeat][codebeat-badge]][codebeat-url]
 
 ## Usage
 
 ```swift
-import WebSocketServer
+import EngineIOServer
 import HTTPServer
 
-let webSocketServer = WebSocketServer.Server { webSocket in
-    print("connected")
-
-    webSocket.onBinary { data in
-        print("data \(data)")
-        try webSocket.send(data)
-    }
-
-    webSocket.onText { text in
-        print("data \(text)")
-        try webSocket.send(text)
-    }
+let engineioServer = EngineioServer.Server { socket in
+	print("socket connected:", socket)
+	
+	socket.onMessage { data in
+		print("socket onMessage:", data)
+		socket.send(data: data)
+	}
+	
 }
 
-try HTTPServer.Server(webSocketServer).start()
+try HTTPServer.Server(engineioServer).start()
 ```
 
 ## Installation
@@ -38,7 +33,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/Zewo/WebSocketServer.git", majorVersion: 0, minor: 1),
+        .Package(url: "https://github.com/Zewo/EngineIOServer.git", majorVersion: 0, minor: 1),
     ]
 )
 ```
@@ -68,7 +63,5 @@ This project is released under the MIT license. See [LICENSE](LICENSE) for detai
 [slack-image]: http://s13.postimg.org/ybwy92ktf/Slack.png
 [slack-badge]: https://zewo-slackin.herokuapp.com/badge.svg
 [slack-url]: http://slack.zewo.io
-[travis-badge]: https://travis-ci.org/Zewo/WebSocketServer.svg?branch=master
-[travis-url]: https://travis-ci.org/Zewo/WebSocketServer
-[codebeat-badge]: https://codebeat.co/badges/cabe1795-6f5e-4fe6-85ab-5b68f1596efd
-[codebeat-url]: https://codebeat.co/projects/github-com-zewo-websocketserver
+[travis-badge]: https://travis-ci.org/Zewo/EngineIOServer.svg?branch=master
+[travis-url]: https://travis-ci.org/Zewo/EngineIOServer

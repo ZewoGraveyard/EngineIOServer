@@ -1,14 +1,14 @@
 import XCTest
-@testable import EngineioServer
+@testable import EngineIOServer
 
-class EngineioServerTests: XCTestCase {
+class EngineIOServerTests: XCTestCase {
     func testReality() {
         XCTAssert(2 + 2 == 4, "Something is severely wrong here.")
     }
 }
 
-extension EngineioServerTests {
-    static var allTests: [(String, (EngineioServerTests) -> () throws -> Void)] {
+extension EngineIOServerTests {
+    static var allTests: [(String, (EngineIOServerTests) -> () throws -> Void)] {
         return [
            ("testReality", testReality),
         ]

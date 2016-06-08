@@ -1,9 +1,9 @@
 #if os(Linux)
 
 import XCTest
-@testable import EngineioServerTestSuite
+@testable import EngineIOServerTestSuite
 
 XCTMain([
-  testCase(EngineioServerTests.allTests),
+  testCase(EngineIOServerTests.allTests),
 ])
 #endif
