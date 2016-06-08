@@ -62,13 +62,13 @@ public struct LogLevel: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let trace   = Level(rawValue: 1 << 0)
-    public static let debug   = Level(rawValue: 1 << 1)
-    public static let info    = Level(rawValue: 1 << 2)
-    public static let warning = Level(rawValue: 1 << 3)
-    public static let error   = Level(rawValue: 1 << 4)
-    public static let fatal   = Level(rawValue: 1 << 5)
-    public static let all     = Level(rawValue: ~0)
+    public static let trace   = LogLevel(rawValue: 1 << 0)
+    public static let debug   = LogLevel(rawValue: 1 << 1)
+    public static let info    = LogLevel(rawValue: 1 << 2)
+    public static let warning = LogLevel(rawValue: 1 << 3)
+    public static let error   = LogLevel(rawValue: 1 << 4)
+    public static let fatal   = LogLevel(rawValue: 1 << 5)
+    public static let all     = LogLevel(rawValue: ~0)
 }
 
 internal func log(level: LogLevel = .debug, _ item: Any) {
