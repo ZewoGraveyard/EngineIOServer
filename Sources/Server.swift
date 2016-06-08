@@ -265,7 +265,7 @@ public class Server: Responder, Middleware {
 	// MARK: - MiddlewareType
 	
 	public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
-		guard let path = request.uri.path where path.hasPrefix(self.path) else {
+		guard let path = request.uri.path where path.starts(with: self.path) else {
 			return try next.respond(to: request)
 		}
 		
@@ -290,7 +290,7 @@ public class Server: Responder, Middleware {
 	
 	/// Handles an Engine.IO HTTP request
 	public func respond(to request: Request) throws -> Response {
-		if let path = request.uri.path where path.hasPrefix(self.path) {
+		if let path = request.uri.path where path.starts(with: self.path) {
 			return try respond(to: request, chainingTo: self)
 		} else {
 			return Response(status: .badRequest)
