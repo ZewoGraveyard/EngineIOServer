@@ -13,7 +13,7 @@
 import EngineIOServer
 import HTTPServer
 
-let engineioServer = EngineioServer.Server { socket in
+let engineioServer = EngineIOServer.Server { socket in
 	print("socket connected:", socket)
 	
 	socket.onMessage { data in
