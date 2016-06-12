@@ -6,6 +6,7 @@
 [![License][mit-badge]][mit-url]
 [![Slack][slack-badge]][slack-url]
 [![Travis][travis-badge]][travis-url]
+[![Codebeat][codebeat-badge]][codebeat-url]
 
 ## Usage
 
@@ -65,3 +66,5 @@ This project is released under the MIT license. See [LICENSE](LICENSE) for detai
 [slack-url]: http://slack.zewo.io
 [travis-badge]: https://travis-ci.org/Zewo/EngineIOServer.svg?branch=master
 [travis-url]: https://travis-ci.org/Zewo/EngineIOServer
+[codebeat-badge]: https://codebeat.co/badges/facbbe98-da45-4d5d-907b-c133d871912a
+[codebeat-url]: https://codebeat.co/projects/github-com-zewo-engineioserver
