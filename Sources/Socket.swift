@@ -87,12 +87,11 @@ public class Socket {
 		_transport.sid = id
 		
 		// sends an `open` packet
-		
-		let data = JSONSerializer().serialize(json: .objectValue([
-			"sid": .stringValue(id),
+		let data = JSONSerializer().serialize(json: .object([
+			"sid": .string(id),
 			"upgrades": getAvailableUpgrades(),
-			"pingInterval": .numberValue(server.pingInterval * 1000),
-			"pingTimeout": .numberValue(server.pingTimeout * 1000)
+			"pingInterval": .number(.double(server.pingInterval * 1000)),
+			"pingTimeout": .number(.double(server.pingTimeout * 1000))
 		]))
 		sendPacket(type: .open, data: data)
 		
@@ -381,7 +380,7 @@ public class Socket {
 //			}
 //		}
 		availableUpgrades.append("websocket")
-		return .arrayValue(availableUpgrades)
+		return .array(availableUpgrades)
 	}
 	
 	/// Closes the socket and underlying transport

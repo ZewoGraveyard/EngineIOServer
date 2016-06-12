@@ -115,7 +115,9 @@ class Parser {
 		}
 		
 		let substr = String(msg.characters.dropFirst())
-		let decoded = Base64.decode(substr)
+		guard let decoded = try? Base64.decode(substr) else {
+			return nil
+		}
 		
 		return Packet(type: type, data: decoded)
 	}

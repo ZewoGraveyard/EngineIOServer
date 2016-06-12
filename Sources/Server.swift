@@ -117,13 +117,13 @@ public class Server: Responder, Middleware {
 	/// Verifies a request
 	private func verify(request: Request) -> ServerError? {
 		// transport check
-		guard let _transportStr = request.uri.query["transport"].first, transportStr = _transportStr, transport = TransportType(rawValue: transportStr) where transports.contains(transport) else {
+		guard let _transportStr = request.uri.query["transport"]?.first, transportStr = _transportStr, transport = TransportType(rawValue: transportStr) where transports.contains(transport) else {
 			return .unknownTransport
 		}
 		
 		// sid check
 		request.uri.query
-		if let _sid = request.uri.query["sid"].first, sid = _sid {
+		if let _sid = request.uri.query["sid"]?.first, sid = _sid {
 			guard let client = clients[sid] else {
 				return .unknownSid
 			}
@@ -159,9 +159,9 @@ public class Server: Responder, Middleware {
 			headers["Access-Control-Allow-Origin"] = "*"
 		}
 		
-		let data = JSONSerializer().serialize(json: .objectValue([
-			"code": .numberValue(Double(error.rawValue)),
-			"message": .stringValue(error.description)
+		let data = JSONSerializer().serialize(json: .object([
+			"code": .number(.integer(error.rawValue)),
+			"message": .string(error.description)
 		]))
 		
 		return Response(status: .badRequest, headers: headers, body: data)
@@ -180,7 +180,7 @@ public class Server: Responder, Middleware {
 			return sendErrorMessage(request: request, error: .badRequest)
 		}
 		
-		if request.uri.query["b64"].first != nil {
+		if request.uri.query["b64"]?.first != nil {
 			transport.supportsBinary = false
 		} else {
 			transport.supportsBinary = true
@@ -212,7 +212,7 @@ public class Server: Responder, Middleware {
 	private func onWebSocket(webSocket: WebSocket, request: Request) throws {
 		log("handleUpgrade socket: \(webSocket)")
 		
-		if let _sid = request.uri.query["sid"].first, sid = _sid {
+		if let _sid = request.uri.query["sid"]?.first, sid = _sid {
 			
 			guard let client = clients[sid] where !client.upgrading && !client.upgraded else {
 				log("upgrade attempt for closed client || transport has already been trying to upgrade || transport had already been upgraded")
@@ -226,7 +226,7 @@ public class Server: Responder, Middleware {
 			
 			log("upgrading existing transport")
 			
-			if request.uri.query["b64"].first != nil {
+			if request.uri.query["b64"]?.first != nil {
 				transport.supportsBinary = false
 			} else {
 				transport.supportsBinary = true
@@ -240,7 +240,7 @@ public class Server: Responder, Middleware {
 	}
 	
 	private func transportForRequest(request: Request, webSocket: WebSocket? = nil) -> TransportInternal? {
-		guard let _transportStr = request.uri.query["transport"].first, transportStr = _transportStr, transportType = TransportType(rawValue: transportStr) else {
+		guard let _transportStr = request.uri.query["transport"]?.first, transportStr = _transportStr, transportType = TransportType(rawValue: transportStr) else {
 			return nil
 		}
 		
@@ -248,7 +248,7 @@ public class Server: Responder, Middleware {
 		
 		switch transportType {
 		case .polling:
-			if let _j = request.uri.query["j"].first, j = _j {
+			if let _j = request.uri.query["j"]?.first, j = _j {
 				transport = TransportPollingJSONP(j: j)
 			} else {
 				transport = TransportPollingXHR()
@@ -278,7 +278,7 @@ public class Server: Responder, Middleware {
 		if request.isWebSocket {
 			return try webSocketServer.respond(to: request)
 		} else {
-			if let _sid = request.uri.query["sid"].first, sid = _sid, client = clients[sid] {
+			if let _sid = request.uri.query["sid"]?.first, sid = _sid, client = clients[sid] {
 				return try client._transport.respond(to: request)
 			} else {
 				return try handshake(request: request)

@@ -117,18 +117,11 @@ class TransportPolling: TransportInternal {
 			dataRequest = nil
 		}
 		
-		switch request.body {
-		case .buffer(let data):
-			onData(data: data)
-		case .receiver(let stream):
-			let data = try stream.receive(upTo: 1024)
-			onData(data: data)
-		case .sender:
-			break
-		}
-
+		let data = try dataRequest!.body.becomeBuffer()
+		onData(data: data)
+		
 		let headers: Headers = [
-			// text/html is required instead of text/plain to avoid an unwanted download dialog on certain user-agents (GH-43)
+			// text/html is required instead of text/plain to avoid an unwanted download dialog on certain user-agents
 			"Content-Type": "text/html"
 		]
 		
