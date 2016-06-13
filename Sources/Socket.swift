@@ -415,6 +415,14 @@ public class Socket {
 		return dataEventEmitter.addListener(listen: listen)
 	}
 	
+	public func onError(listen: EventListener<String>.Listen) -> EventListener<String> {
+		return errorEventEmitter.addListener(listen: listen)
+	}
+	
+	public func onClose(listen: EventListener<(reason: TransportCloseReason, description: String?)>.Listen) -> EventListener<(reason: TransportCloseReason, description: String?)> {
+		return closeEventEmitter.addListener(listen: listen)
+	}
+	
 }
 
 // MARK: - Equatable
