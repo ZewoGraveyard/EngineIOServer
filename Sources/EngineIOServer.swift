@@ -1,4 +1,4 @@
-// Server.swift
+// EngineIOServer.swift
 //
 // The MIT License (MIT)
 //
@@ -72,7 +72,7 @@ public struct LogLevel: OptionSet {
 }
 
 internal func log(level: LogLevel = .debug, _ item: Any) {
-	guard level.rawValue >= Server.logLevel.rawValue else { return }
+	guard level.rawValue >= EngineIOServer.logLevel.rawValue else { return }
 //	log.log(level, item: item)
 	print(item)
 }

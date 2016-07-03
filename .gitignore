@@ -28,4 +28,4 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
-XcodeDevelopment/
+*.xcodeproj

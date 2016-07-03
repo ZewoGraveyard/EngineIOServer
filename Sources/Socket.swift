@@ -34,7 +34,7 @@ public class Socket {
 	}
 	
 	public let id: String
-	public let server: Server
+	public let server: EngineIOServer
 	public let request: Request
 	internal var upgrading = false
 	internal var upgraded = false
@@ -70,7 +70,7 @@ public class Socket {
 	private var onCloseEventListener: EventListener<(reason: TransportCloseReason, description: String?)>?
 	private var drainEventListener: EventListener<Void>?
 	
-	internal init(id: String, server: Server, request: Request, transport: TransportInternal) {
+	internal init(id: String, server: EngineIOServer, request: Request, transport: TransportInternal) {
 		self.id = id
 		self.server = server
 		self.request = request
