@@ -1,4 +1,4 @@
-// Socket.swift
+// EngineIOSocket.swift
 //
 // The MIT License (MIT)
 //
@@ -27,7 +27,7 @@ import Event
 import Venice
 import JSON
 
-public class Socket {
+public class EngineIOSocket {
 	
 	public enum State {
 		case opening, open, closing, closed
@@ -427,8 +427,8 @@ public class Socket {
 
 // MARK: - Equatable
 
-extension Socket: Equatable {}
+extension EngineIOSocket: Equatable {}
 
-public func ==(lhs: Socket, rhs: Socket) -> Bool {
+public func ==(lhs: EngineIOSocket, rhs: EngineIOSocket) -> Bool {
 	return lhs.id == rhs.id
 }

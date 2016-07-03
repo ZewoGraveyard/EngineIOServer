@@ -91,11 +91,11 @@ public class EngineIOServer: Responder, Middleware {
 	public var cookie: String? = "io"
 	public var path = "/engine.io"
 	
-	public private(set) var clients = [String: Socket]()
+	public private(set) var clients = [String: EngineIOSocket]()
 	
-	let connectionEventEmitter = EventEmitter<Socket>()
-	let drainEventEmitter = EventEmitter<Socket>()
-	let flushEventEmitter = EventEmitter<(socket: Socket, writeBuffer: [Packet])>()
+	let connectionEventEmitter = EventEmitter<EngineIOSocket>()
+	let drainEventEmitter = EventEmitter<EngineIOSocket>()
+	let flushEventEmitter = EventEmitter<(socket: EngineIOSocket, writeBuffer: [Packet])>()
 	
 	// MARK: - Init
 	
@@ -103,7 +103,7 @@ public class EngineIOServer: Responder, Middleware {
 		self.webSocketServer = WebSocketServer(onWebSocket)
 	}
 	
-	public convenience init(onConnect: EventListener<Socket>.Listen) {
+	public convenience init(onConnect: EventListener<EngineIOSocket>.Listen) {
 		self.init()
 		self.onConnect(listen: onConnect)
 	}
@@ -190,7 +190,7 @@ public class EngineIOServer: Responder, Middleware {
 		
 		log("handshaking client: \(sid)")
 		
-		let socket = Socket(id: sid, server: self, request: request, transport: transport)
+		let socket = EngineIOSocket(id: sid, server: self, request: request, transport: transport)
 		
 		if let cookie = self.cookie {
 			transport.headers["Set-Cookie"] = Header("\(cookie)=\(sid)")
@@ -298,7 +298,7 @@ public class EngineIOServer: Responder, Middleware {
 	
 	// MARK: - EventEmitter
 	
-	public func onConnect(listen: EventListener<Socket>.Listen) -> EventListener<Socket> {
+	public func onConnect(listen: EventListener<EngineIOSocket>.Listen) -> EventListener<EngineIOSocket> {
 		return connectionEventEmitter.addListener(listen: listen)
 	}
 	
