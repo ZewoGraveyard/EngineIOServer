@@ -34,7 +34,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/Zewo/EngineIOServer.git", majorVersion: 0, minor: 2),
+        .Package(url: "https://github.com/Zewo/EngineIOServer.git", majorVersion: 0, minor: 7),
     ]
 )
 ```
