@@ -14,17 +14,16 @@
 import EngineIOServer
 import HTTPServer
 
-let engineioServer = EngineIOServer.Server { socket in
+let engineioServer = EngineIOServer { socket in
 	print("socket connected:", socket)
 	
 	socket.onMessage { data in
 		print("socket onMessage:", data)
 		socket.send(data: data)
 	}
-	
 }
 
-try HTTPServer.Server(engineioServer).start()
+try Server(engineioServer).start()
 ```
 
 ## Installation
