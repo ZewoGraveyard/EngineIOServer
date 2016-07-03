@@ -77,11 +77,11 @@ internal func log(level: LogLevel = .debug, _ item: Any) {
 	print(item)
 }
 
-public class Server: Responder, Middleware {
+public class EngineIOServer: Responder, Middleware {
 	
 	public static var logLevel: LogLevel = .error
 	
-	private var webSocketServer: WebSocketServer.Server!
+	private var webSocketServer: WebSocketServer!
 	
 	public var pingTimeout: Double = 60
 	public var pingInterval: Double = 25
@@ -100,7 +100,7 @@ public class Server: Responder, Middleware {
 	// MARK: - Init
 	
 	public init() {
-		self.webSocketServer = WebSocketServer.Server(onWebSocket)
+		self.webSocketServer = WebSocketServer(onWebSocket)
 	}
 	
 	public convenience init(onConnect: EventListener<Socket>.Listen) {
@@ -208,8 +208,7 @@ public class Server: Responder, Middleware {
 	}
 	
 	/// Called upon a webSocket connection
-//	request: Request, 
-	private func onWebSocket(webSocket: WebSocket, request: Request) throws {
+	private func onWebSocket(request: Request, webSocket: WebSocket) throws {
 		log("handleUpgrade socket: \(webSocket)")
 		
 		if let _sid = request.uri.query["sid"]?.first, sid = _sid {
