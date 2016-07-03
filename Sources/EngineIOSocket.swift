@@ -90,8 +90,8 @@ public class EngineIOSocket {
 		let data = JSONSerializer().serialize(json: .object([
 			"sid": .string(id),
 			"upgrades": getAvailableUpgrades(),
-			"pingInterval": .number(.double(server.pingInterval * 1000)),
-			"pingTimeout": .number(.double(server.pingTimeout * 1000))
+			"pingInterval": .number(.integer(Int(server.pingInterval * 1000))),
+			"pingTimeout": .number(.integer(Int(server.pingTimeout * 1000)))
 		]))
 		sendPacket(type: .open, data: data)
 		
